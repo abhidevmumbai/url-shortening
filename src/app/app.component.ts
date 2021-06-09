@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'url-shortening';
 
-  onShortenUrl(urlObject: any) {
-    console.log(urlObject);
+  onShortenUrl(url: any) {
+    console.log(url);
   }
 }

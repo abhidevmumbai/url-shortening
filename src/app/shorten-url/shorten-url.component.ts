@@ -14,11 +14,11 @@ interface UrlObject {
 })
 export class ShortenUrlComponent implements OnInit {
   form: FormGroup;
-  shortenedUrl: string | null = null;
+  shortenedUrl: string = '';
 
   @Output() shorteningComplete = new EventEmitter<UrlObject>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private apiService: ApiService) {
     this.form = this.fb.group({
       url: [
         '',
@@ -36,11 +36,15 @@ export class ShortenUrlComponent implements OnInit {
 
   shorten() {
     if (this.form.valid) {
-      console.log(this.form.value.url);
-      // this.apiService.getShortenedUrl(this.form.value.url).subscribe((res) => {
-      //   console.log(res);
-      //   // this.shortenedUrl = res;
-      // });
+      this.apiService
+        .getShortenedUrl(this.form.value.url)
+        .subscribe((res: any) => {
+          this.shortenedUrl = res.result.full_short_link;
+          this.shorteningComplete.emit({
+            short: this.shortenedUrl,
+            long: this.form.value.url,
+          });
+        });
     }
   }
 }
