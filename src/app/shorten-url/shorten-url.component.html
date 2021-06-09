@@ -1,0 +1,20 @@
+<div>
+  <form (ngSubmit)="shorten()" [formGroup]="form">
+    <input
+      type="text"
+      placeholder="Shorten a link here..."
+      formControlName="url"
+    />
+    <div
+      *ngIf="
+        form.controls['url'].invalid ||
+        form.controls['url'].dirty ||
+        form.controls['url'].touched
+      "
+    >
+      Please enter a valid URL
+    </div>
+    <button type="submit" [disabled]="!form.valid">Shorten it!</button>
+    {{ form.status }}
+  </form>
+</div>
